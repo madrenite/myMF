@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application
+			type="server-application"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v1.xsd">
+  <guid>a52de47a-b2fa-4f2e-9efd-dc3fd0a70c8c</guid>
+  <name>MFVaultApplication1</name>
+  <description>MFVaultApplication1</description>
+  <publisher></publisher>
+  <version>1.0.0.0</version>
+  <copyright></copyright>
+  <extension-objects>
+    <extension-object>
+      <name>MFVaultApplication1</name>
+      <assembly>MFVaultApplication1.dll</assembly>
+      <class>MFVaultApplication1.VaultApplication</class>
+      <installation-method>Install</installation-method>
+      <uninstallation-method>Uninstall</uninstallation-method>
+      <initialization-method>Initialize</initialization-method>
+      <uninitialization-method>Uninitialize</uninitialization-method>
+      <start-operations-method>StartOperations</start-operations-method>
+    </extension-object>
+  </extension-objects>
+</application>
