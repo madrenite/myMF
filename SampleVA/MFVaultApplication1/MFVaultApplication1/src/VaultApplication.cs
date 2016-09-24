@@ -33,7 +33,7 @@ namespace MFVaultApplication1
         /// Use Named Value Manager to change the configurations in the named value storage.
         /// </summary>
         [MFConfiguration("MFVaultApplication1", "config")]
-        private Configuration config = new Configuration() { TestClassID = "TestClass" };
+        private Configuration config = new Configuration() { TestClassID = "MF.CL.TestClass" };
 
         /// <summary>
         /// The method, that is run when the vault goes online.
@@ -41,7 +41,7 @@ namespace MFVaultApplication1
         protected override void StartApplication()
         {
             // Start writing extension method output to the event log every ten seconds. The background operation will continue until the vault goes offline.
-            this.BackgroundOperations.StartRecurringBackgroundOperation("Recurring Hello World Operation", TimeSpan.FromSeconds(10), () =>
+            this.BackgroundOperations.StartRecurringBackgroundOperation("Recurring Hello World Operation", TimeSpan.FromSeconds(120), () =>
              {
                     // Prepare input for the extension method.
                     string input = "Hello from MFVaultApplication1";
@@ -64,7 +64,25 @@ namespace MFVaultApplication1
         private string TestVaultExtensionMethod(EventHandlerEnvironment env)
         {
             // Return the input and the alias and id of the test class. If the class is missing, ID is -1.
-            return env.Input + ": " + config.TestClassID.Alias + ": ID:" + config.TestClassID.ID + ", GUID:" + config.TestClassID.Guid;
+            return env.Input + ": " + config.TestClassID.Alias + ": ID:" + config.TestClassID.ID + ", GUID:" + config.TestClassID.Guid.ToString();
         }
+
+        /// <summary>
+        /// Logs details
+        /// </summary>
+        /// <param name="env">Details</param>
+        [StateAction("Logging")]
+        public void Logging( StateEnvironment env )
+        {
+            if (env?.ObjVerEx == null)
+                return;
+
+            string message =
+                $"The object {env.ObjVerEx.Title} " +
+                $"(Type {env.ObjVer.Type} ID {env.ObjVer.ID}) " +
+                $"was moved into the logging state.";
+            SysUtils.ReportInfoToEventLog(message);
+        }
+
     }
 }
