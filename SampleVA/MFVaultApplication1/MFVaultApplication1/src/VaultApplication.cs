@@ -33,7 +33,7 @@ namespace MFVaultApplication1
         /// Use Named Value Manager to change the configurations in the named value storage.
         /// </summary>
         [MFConfiguration("MFVaultApplication1", "config")]
-        private Configuration config = new Configuration() { TestClassID = "TestClassAlias" };
+        private Configuration config = new Configuration() { TestClassID = "TestClass" };
 
         /// <summary>
         /// The method, that is run when the vault goes online.
@@ -64,7 +64,7 @@ namespace MFVaultApplication1
         private string TestVaultExtensionMethod(EventHandlerEnvironment env)
         {
             // Return the input and the alias and id of the test class. If the class is missing, ID is -1.
-            return env.Input + ": " + config.TestClassID.Alias + ": " + config.TestClassID.ID;
+            return env.Input + ": " + config.TestClassID.Alias + ": ID:" + config.TestClassID.ID + ", GUID:" + config.TestClassID.Guid;
         }
     }
 }
