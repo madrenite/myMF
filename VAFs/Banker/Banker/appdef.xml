@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application
+			type="server-application"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v1.xsd">
+  <guid>d73e9a4a-0a5d-489f-935c-b6c2bff41742</guid>
+  <name>Banker</name>
+  <description>Banker</description>
+  <publisher></publisher>
+  <version>0.0.0.1</version>
+  <copyright></copyright>
+  <extension-objects>
+    <extension-object>
+      <name>Banker</name>
+      <assembly>Banker.dll</assembly>
+      <class>Banker.VaultApplication</class>
+      <installation-method>Install</installation-method>
+      <uninstallation-method>Uninstall</uninstallation-method>
+      <initialization-method>Initialize</initialization-method>
+      <uninitialization-method>Uninitialize</uninitialization-method>
+      <start-operations-method>StartOperations</start-operations-method>
+    </extension-object>
+  </extension-objects>
+</application>
