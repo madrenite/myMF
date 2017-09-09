@@ -81,18 +81,47 @@ namespace Banker
             return env.Input + ": " + config.TestClassID.Alias + ": " + config.TestClassID.ID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="env"></param>
         [EventHandler(MFEventHandlerType.MFEventHandlerBeforeCreateNewObjectFinalize)]
         private void BeforeCreatingANewObject(EventHandlerEnvironment env)
         {
+            // Defining new property values collection
             PropertyValues propertyValues = new PropertyValues();
 
+            // If ObjVer currently handled (when event triggers) equals "Kokeiluasteluokka" class
             if (env.ObjVerEx.Class == config.Kokeiluasteluokka)
             {
-                string stringValueToPlayWith = env.ObjVerEx.Properties.SearchForProperty(config.summaProperty).GetValueAsLocalizedText();
+                // Searching first
+                var searchBuilder = new MFSearchBuilder(env.Vault);
+                // with Object Type filter
+                searchBuilder.ObjType((int)MFBuiltInObjectType.MFBuiltInObjectTypeDocument);
+                // with class
+                searchBuilder.Class(config.Kokeiluasteluokka);
+                // Not deleted
+                searchBuilder.Deleted(false);
+                // Refurbish new pile
+                List<ObjVerEx> pileOfObjVers = new List<ObjVerEx>();
+                // Executing the search
+                pileOfObjVers = searchBuilder.FindEx();
+                CommonHelpers.LogMessageToFile("Found those little fockers with the amount of " + pileOfObjVers.Count.ToString());
+
+                string stringTheValueToPlayWith = env.ObjVerEx.Properties.SearchForProperty(config.summaProperty).GetValueAsLocalizedText();
 
                 //float valueToPlayWith = float.Parse(stringValueToPlayWith, CultureInfo.InvariantCulture.NumberFormat);
-                float valueToPlayWith = (float)Convert.ToDouble(stringValueToPlayWith);
-                valueToPlayWith += valueToPlayWith;
+                float valueToPlayWith = (float)Convert.ToDouble(stringTheValueToPlayWith);
+
+                foreach (ObjVerEx value in pileOfObjVers)
+                {
+                    CommonHelpers.LogMessageToFile("Iterated F0cker: " + value.Title);
+                    string browsingThroughValue = value.Properties.SearchForProperty(config.summaProperty).GetValueAsLocalizedText();
+                    CommonHelpers.LogMessageToFile("    Value: " + browsingThroughValue);
+                    float oldValueBeingHandled = (float)Convert.ToDouble(browsingThroughValue);
+                    valueToPlayWith = valueToPlayWith + oldValueBeingHandled;
+                }
+
 
                 var summaVal = env.ObjVerEx.Properties.SearchForProperty(config.summaProperty).Value.Value;
                 
